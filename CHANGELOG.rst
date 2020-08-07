@@ -2,6 +2,14 @@
 Changelog for package robot_self_filter
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* PCL > 1.10 uses c++ 14
+* find_package(Boost signals) no longer required for noetic, use find_package(Boost)
+* remove indigo/lunar from .travis.yml
+* add noetic and fix .travs.yml
+* Contributors: Kei Okada
+
 0.1.31 (2018-11-24)
 -------------------
 * Merge pull request `#16 <https://github.com/PR2/robot_self_filter/issues/16>`_ from mikaelarguedas/tinyxml_dependency
