@@ -2,20 +2,23 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(robot_self_filter)
 
-if(CMAKE_COMPILER_IS_GNUCXX)
-    set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
-endif()
-
-
 find_package(PkgConfig REQUIRED)
 
-find_package(Boost REQUIRED COMPONENTS signals)
+find_package(Boost REQUIRED COMPONENTS)
 
 set(bullet_FOUND 0)
 pkg_check_modules(bullet REQUIRED bullet)
 
 find_package( PCL REQUIRED )
 add_definitions(${PCL_DEFINITIONS})
+if(CMAKE_COMPILER_IS_GNUCXX)
+  if("${PCL_VERSION}" VERSION_GREATER "1.9") # PCL > 1.10 needs c++14
+    set(CMAKE_CXX_FLAGS "-std=c++14 ${CMAKE_CXX_FLAGS}")
+  else()
+    set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
+  endif()
+endif()
+
 
 find_package(ASSIMP QUIET)
 if (NOT ASSIMP_FOUND)
