@@ -9,7 +9,7 @@ endif()
 
 find_package(PkgConfig REQUIRED)
 
-find_package(Boost REQUIRED COMPONENTS signals)
+find_package(Boost REQUIRED COMPONENTS)
 
 set(bullet_FOUND 0)
 pkg_check_modules(bullet REQUIRED bullet)
