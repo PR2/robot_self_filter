@@ -371,7 +371,7 @@ struct LinkInfo
           if (out == OUTSIDE)
           {
 
-            // we check it the point is a shadow point 
+            // we check if the point is a shadow point 
             tf::Vector3 dir(sensor_pos_ - pt);
             tfScalar  lng = dir.length();
             if (lng < min_sensor_dist_)
@@ -382,8 +382,12 @@ struct LinkInfo
 	    
               std::vector<tf::Vector3> intersections;
               for (unsigned int j = 0 ; out == OUTSIDE && j < bs ; ++j)
+              {
+                // get the 1st intersection of ray pt->sensor
+                intersections.clear(); // intersectsRay doesn't clear the vector...
 		if (bodies_[j].body->intersectsRay(pt, dir, &intersections, 1))
 		{
+                  // is the intersection between point and sensor?
                   if (dir.dot(sensor_pos_ - intersections[0]) >= 0.0)
                   {
                     if (intersectionCallback)
@@ -391,6 +395,7 @@ struct LinkInfo
                     out = SHADOW;
                   }
 		}
+              }
 	    
               // if it is not a shadow point, we check if it is inside the scaled body
               for (unsigned int j = 0 ; out == OUTSIDE && j < bs ; ++j)
@@ -597,7 +602,7 @@ struct LinkInfo
             // if the point is not inside the unscaled body,
             if (out == OUTSIDE)
             {
-              // we check it the point is a shadow point 
+              // we check if the point is a shadow point 
               tf::Vector3 dir(sensor_pos_ - pt);
               tfScalar  lng = dir.length();
               if (lng < min_sensor_dist_) {
@@ -610,8 +615,11 @@ struct LinkInfo
 
 		std::vector<tf::Vector3> intersections;
 		for (unsigned int j = 0 ; out == OUTSIDE && j < bs ; ++j) {
+                  // get the 1st intersection of ray pt->sensor
+                  intersections.clear(); // intersectsRay doesn't clear the vector...
                   if (bodies_[j].body->intersectsRay(pt, dir, &intersections, 1))
                   {
+                    // is the intersection between point and sensor?
                     if (dir.dot(sensor_pos_ - intersections[0]) >= 0.0)
                     {
                       if (callback)
