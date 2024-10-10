@@ -12,10 +12,9 @@ pkg_check_modules(bullet REQUIRED bullet)
 find_package( PCL REQUIRED )
 add_definitions(${PCL_DEFINITIONS})
 if(CMAKE_COMPILER_IS_GNUCXX)
-  if("${PCL_VERSION}" VERSION_GREATER "1.9") # PCL > 1.10 needs c++14
-    set(CMAKE_CXX_FLAGS "-std=c++14 ${CMAKE_CXX_FLAGS}")
-  else()
-    set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
+  # PCL < 1.10 needs c++11, which wasn't the default on targeted systems yet
+  if("${PCL_VERSION}" VERSION_LESS "1.10")
+    add_compile_options(-std=c++11)
   endif()
 endif()
 
